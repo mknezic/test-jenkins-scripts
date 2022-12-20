@@ -26,8 +26,16 @@ properties([
         ]
 ])
 
+def type22 = params.typeOfBuild
+
+sayHello(params.typeOfBuild)
+
 doBuild {
-    name = "${params.typeOfBuild}"
+    name = type22
+}
+
+runCodeQualityAnalysis {
+    run = type22 == 'NIGHTLY'
 }
 
 runCodeQualityAnalysis {
@@ -35,3 +43,5 @@ runCodeQualityAnalysis {
 }
 
 ```
+
+so, cannot use params.typeOfBuild in closures as it won't be resolved as params is null, but can use that def type22
