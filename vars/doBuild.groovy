@@ -1,7 +1,12 @@
-def call(String name = 'human') {
+def call(body) {
+    Map jenkinsfileConfig = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = jenkinsfileConfig
+    body()
+
     // Any valid steps can be called from this code, just like in other
     // Scripted Pipeline
-    echo "Hello, ${name} 2."
+    echo "Hello, ${jenkinsfileConfig.name} 2."
 
     stage "test node call2"
     doNodeJob2("jobBlaX2")
